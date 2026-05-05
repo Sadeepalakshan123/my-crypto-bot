@@ -118,8 +118,10 @@ window.onload = () => {
     startLiveStream();
     setInterval(syncMarketData, 60000);
     setInterval(async () => {
+        const botUrlInput = document.getElementById('bot-url');
+        const botUrl = botUrlInput.value || "http://localhost:8080";
         try {
-            const res = await fetch('trades.json');
+            const res = await fetch(`${botUrl}/trades`);
             if (!res.ok) return;
             const positions = await res.json();
             const tbody = document.getElementById('live-positions-body');
@@ -135,6 +137,8 @@ window.onload = () => {
             });
         } catch(e) {}
     }, 5000);
+};
+
 // UI Controls & Remote Control
 document.getElementById('auto-trade-btn').addEventListener('click', async function() {
     const status = document.querySelector('.status-text');

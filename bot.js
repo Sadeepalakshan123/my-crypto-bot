@@ -17,6 +17,15 @@ app.get('/', (req, res) => res.send('CryptoAI Bot is Status: ' + (isBotActive ? 
 
 app.get('/status', (req, res) => res.json({ active: isBotActive }));
 
+app.get('/trades', (req, res) => {
+    try {
+        const data = fs.readFileSync('trades.json');
+        res.json(JSON.parse(data));
+    } catch (e) {
+        res.json([]);
+    }
+});
+
 app.get('/start', (req, res) => {
     isBotActive = true;
     console.log('AI Engine Resumed remotely.');
