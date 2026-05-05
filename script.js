@@ -112,11 +112,36 @@ document.getElementById('asset-select').addEventListener('change', function() {
     startLiveStream();
 });
 
+async function syncBotStatus() {
+    const botUrlInput = document.getElementById('bot-url');
+    const botUrl = botUrlInput.value || "http://localhost:8080";
+    const statusText = document.querySelector('.status-text');
+    const btn = document.getElementById('auto-trade-btn');
+    
+    try {
+        const res = await fetch(`${botUrl}/status`);
+        const data = await res.json();
+        if (data.active) {
+            btn.innerText = "PAUSE AI ENGINE";
+            btn.style.background = "var(--bg-secondary)";
+            statusText.innerText = "ACTIVE";
+            statusText.style.color = "var(--success)";
+        } else {
+            btn.innerText = "START AI ENGINE";
+            btn.style.background = "var(--accent-gradient)";
+            statusText.innerText = "PAUSED";
+            statusText.style.color = "var(--text-secondary)";
+        }
+    } catch(e) {}
+}
+
 window.onload = () => {
     initChart();
     syncMarketData();
     startLiveStream();
+    syncBotStatus();
     setInterval(syncMarketData, 60000);
+    setInterval(syncBotStatus, 10000);
     setInterval(async () => {
         const botUrlInput = document.getElementById('bot-url');
         const botUrl = botUrlInput.value || "http://localhost:8080";
