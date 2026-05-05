@@ -123,7 +123,7 @@ async function syncBotStatus() {
         const res = await fetch(`${botUrl}/status`);
         const data = await res.json();
         if (data.active) {
-            btn.innerText = "PAUSE AI ENGINE";
+            btn.innerText = "STOP AI ENGINE";
             btn.style.background = "var(--bg-secondary)";
             statusText.innerText = "ACTIVE";
             statusText.style.color = "var(--success)";
@@ -181,7 +181,7 @@ document.getElementById('auto-trade-btn').addEventListener('click', async functi
             const res = await fetch(`${botUrl}/start`);
             const data = await res.json();
             if (data.success) {
-                this.innerText = "PAUSE AI ENGINE";
+                this.innerText = "STOP AI ENGINE";
                 this.style.background = "var(--bg-secondary)";
                 status.innerText = "ACTIVE";
                 status.style.color = "var(--success)";
@@ -191,7 +191,7 @@ document.getElementById('auto-trade-btn').addEventListener('click', async functi
             addLog("Remote Error: Bot not reachable. Check URL.", true);
         }
     } else {
-        addLog("Sending Pause signal to AI Engine...");
+        addLog("Sending Stop signal to AI Engine...");
         try {
             const res = await fetch(`${botUrl}/stop`);
             const data = await res.json();
@@ -200,7 +200,7 @@ document.getElementById('auto-trade-btn').addEventListener('click', async functi
                 this.style.background = "var(--accent-gradient)";
                 status.innerText = "PAUSED";
                 status.style.color = "var(--text-secondary)";
-                addLog("AI Engine Paused remotely.");
+                addLog("AI Engine Stopped remotely.");
             }
         } catch(e) {
             addLog("Remote Error: Bot not reachable. Check URL.", true);
