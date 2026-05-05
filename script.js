@@ -116,6 +116,7 @@ async function syncBotStatus() {
     const botUrlInput = document.getElementById('bot-url');
     const botUrl = botUrlInput.value || "http://localhost:8080";
     const statusText = document.querySelector('.status-text');
+    const statusDot = document.getElementById('ai-status-dot');
     const btn = document.getElementById('auto-trade-btn');
     
     try {
@@ -126,11 +127,15 @@ async function syncBotStatus() {
             btn.style.background = "var(--bg-secondary)";
             statusText.innerText = "ACTIVE";
             statusText.style.color = "var(--success)";
+            statusDot.style.background = "var(--success)";
+            statusDot.style.boxShadow = "0 0 10px var(--success)";
         } else {
             btn.innerText = "START AI ENGINE";
             btn.style.background = "var(--accent-gradient)";
             statusText.innerText = "PAUSED";
             statusText.style.color = "var(--text-secondary)";
+            statusDot.style.background = "#555";
+            statusDot.style.boxShadow = "none";
         }
     } catch(e) {}
 }
